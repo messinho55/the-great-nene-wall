@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Day Website</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: url('https://www.transparenttextures.com/patterns/strawberries.png'), #ff6b6b;
+            background-blend-mode: multiply;
+            color: white;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        button {
+            background: white;
+            color: #ff6b6b;
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 10px;
+            transition: background 0.3s ease;
+        }
+        button:hover {
+            background: #ffe6e6;
+        }
+        input[type="password"], input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            width: 80%;
+            max-width: 300px;
+        }
+        .hidden {
+            display: none;
+        }
+
+        /* Love Calculator Section */
+        #loveCalculator {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        #loveCalculator h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        #loveResult {
+            font-size: 32px;
+            font-weight: bold;
+            color: #ffeb3b;
+            margin-top: 20px;
+        }
+
+        /* Countdown Timer Section */
+        #countdown {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        #countdown h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        #timer {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        #timer div {
+            background: rgba(255, 255, 255, 0.3);
+            padding: 10px;
+            border-radius: 10px;
+            min-width: 60px;
+        }
+
+        /* Memories Section Grid */
+        .memories-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .memories-grid img, .memories-grid video {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .memories-grid .middle {
+            grid-column: 2 / 3;
+            grid-row: 2 / 3;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .memories-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .memories-grid .middle {
+                grid-column: 1 / 3;
+                grid-row: 3 / 4;
+            }
+        }
+
+        /* Why You Should Marry Me Section - Custom Styling */
+        #reasons {
+            font-family: 'Georgia', serif;
+            background: #ff6b6b;
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 800px;
+            margin: 20px auto;
+            text-align: left;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        #reasons h1 {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        #reasons ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        #reasons li {
+            font-size: 24px;
+            margin: 15px 0;
+            line-height: 1.5;
+        }
+
+        #reasons li::before {
+            content: "❤️ ";
+            font-size: 28px;
+        }
+
+        /* General Button Styles */
+        #reasons button {
+            font-size: 20px;
+            padding: 12px 24px;
+            border-radius: 12px;
+            background-color: white;
+            color: #ff6b6b;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        #reasons button:hover {
+            background-color: #ffe6e6;
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- Background Music -->
+  <audio controls>
+  <source src="https://raw.githubusercontent.com/messinho55/friendly-happiness/main/your-song.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
+    
+    <!-- Warning Section -->
+    <section id="warning">
+        <h1>⚠️🍓 Warning! 🍓⚠️</h1>
+        <p>I didn't steal this idea from my Birthday website, but it's just the best thing I thought of!</p>
+        <button id="playButton" onclick="playAudio()">Play Song</button>
+        <button onclick="showSection('signin')">Continue</button>
+    </section>
+
+    <!-- Sign-In Section -->
+    <section id="signin" class="hidden">
+        <h1>Sign In</h1>
+        <input type="password" id="password" placeholder="Enter Password">
+        <button onclick="checkPassword()">Submit</button>
+    </section>
+
+    <!-- Do You Love Me? Section -->
+    <section id="doyouloveme" class="hidden">
+        <h1>Do you love me?</h1>
+        <button onclick="showSection('letter')">Yes</button>
+        <button onclick="wrongAnswer()">No</button>
+    </section>
+
+    <!-- Letter Section -->
+    <section id="letter" class="hidden">
+        <h1>Letter for You</h1>
+        <div>
+            <p>Dear Sophia,</p>
+            <p>Sorry in advance if you didn’t like this letter because my brain is not braining—it’s my first Valentine’s Day! BUT YOU KNOW I’M GOOD AT LETTERS THOO. Anyways, Happy Valentine’s Day, Habibi!!!!</p>
+            <p>I wanted to remind you on this day of how beautiful, brave, and awesome of a girlfriend you are. I want to thank you for every moment we’ve spent together and for everything you’ve done for me (I know you’re gonna say, “I didn’t do anything,” but you did, shawty 😘😘).</p>
+            <p>I also want to thank you for choosing to love me and be my girl (my little sweet potato nene girl). Thank you for everything, Sophia, and please take care of that pretty smile on your face right now for me.</p>
+            <p>I love you so much, Sophia. No, actually, I ADORE YOU AND I ADORE EVERY SINGLE DETAIL ABOUT YOU BECAUSE YOU’RE JUST PERFECT IN MY EYES.</p>
+            <p>And last but not least, I want you to know that you’re my favorite person in the entire world. Every day with you feels like a new adventure, and I’m so grateful to have you by my side. You make me laugh, you make me smile, and you make me feel like the luckiest guy alive.</p>
+            <p>I promise to always be there for you, to support you, and to love you with all my heart. You’re my everything, Sophia, and I can’t wait to create even more beautiful memories with you.</p>
+            <p>So, here’s to us, to our love, and to many more Valentine’s Days together. I love you more than words can ever express, and I’ll keep showing you every single day how much you mean to me.</p>
+            <p>Forever yours,</p>
+            <p>Omar 😘🍓</p>
+        </div>
+        <button onclick="showSection('loveCalculator')">Next: Love Calculator</button>
+    </section>
+
+    <!-- Love Calculator Section -->
+    <section id="loveCalculator" class="hidden">
+        <div>
+            <h2>Love Calculator</h2>
+            <input type="text" id="name1" placeholder="Enter First Name" value="Omar" readonly>
+            <input type="text" id="name2" placeholder="Enter Second Name" value="Sophia" readonly>
+            <button onclick="calculateLove()">Calculate Love</button>
+            <div id="loveResult"></div>
+        </div>
+        <button onclick="showSection('countdown')">Next: Countdown to Next Valentine's Day</button>
+    </section>
+
+    <!-- Countdown Timer Section -->
+    <section id="countdown" class="hidden">
+        <div>
+            <h2>Countdown to Next Valentine's Day</h2>
+            <div id="timer">
+                <div><span id="days">00</span> Days</div>
+                <div><span id="hours">00</span> Hours</div>
+                <div><span id="minutes">00</span> Minutes</div>
+                <div><span id="seconds">00</span> Seconds</div>
+            </div>
+        </div>
+        <button onclick="showSection('memories')">Next: Our Memories Together</button>
+    </section>
+
+    <!-- Memories Section -->
+    <section id="memories" class="hidden">
+        <h1>OUR MEMORIES TOGETHER</h1>
+        <p>(although they're not much because I don't save a lot)</p>
+        <div class="memories-grid">
+            <!-- First Row -->
+            <img src="memory1.jpg" alt="Memory 1">
+            <video controls>
+                <source src="memory_video1.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <img src="memory2.jpg" alt="Memory 2">
+
+            <!-- Second Row -->
+            <video controls>
+                <source src="memory_video2.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <img src="memory3.jpg" alt="Memory 3" class="middle">
+            <img src="memory4.jpg" alt="Memory 4">
+        </div>
+        <button onclick="showSection('reasons')">Next: Why You Should Marry Me</button>
+    </section>
+
+    <!-- Why You Should Marry Me Section -->
+    <section id="reasons" class="hidden">
+        <h1>Why You Should Marry Me</h1>
+        <ul>
+            <li>I’m really good at taking selfies... no really, just ask.</li>
+            <li>I’ll always share my fries with you—even the last one!</li>
+            <li>I’ll never leave the house without you (even if it's just to the grocery store).</li>
+            <li>I've perfected the art of making chai just the way you like it!</li>
+            <li>I make a mean playlist of the weirdest songs in history but trust me, you're gonna like it !</li>
+            <li>I’m really good at saying the right things (and sometimes the wrong ones, but they’re still funny).</li>
+            <li>Forever your personal stand-up comedian!</li>
+        </ul>
+        <button onclick="showSection('endPage')">End</button>
+    </section>
+
+    <!-- End Page Section -->
+    <section id="endPage" class="hidden">
+        <h1>❤️ END OF PAGE ❤️</h1>
+        <p>Thank you for visiting, here's to love, laughs, and forever!</p>
+        <div>
+            <p>❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️</p>
+        </div>
+    </section>
+
+    <script>
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('section');
+            sections.forEach(section => {
+                section.classList.add('hidden');
+            });
+            document.getElementById(sectionId).classList.remove('hidden');
+        }
+
+        function checkPassword() {
+            const password = document.getElementById('password').value;
+            if (password === 'love') {
+                showSection('doyouloveme');
+            } else {
+                alert('Wrong password! Try again.');
+            }
+        }
+
+        function wrongAnswer() {
+            alert('no cap you love me, RESTART THE MISSION LITTLE GIRL');
+            showSection('endPage');
+        }
+
+        function calculateLove() {
+            const name1 = document.getElementById('name1').value;
+            const name2 = document.getElementById('name2').value;
+            const loveScore = Math.floor(Math.random() * 100) + 1;
+            document.getElementById('loveResult').textContent = `${name1} & ${name2} have ${loveScore}% love compatibility!`;
+        }
+
+        function playAudio() {
+            const audio = document.getElementById('backgroundMusic');
+            const playButton = document.getElementById('playButton');
+            if (audio.paused) {
+                audio.play();
+                playButton.textContent = "Pause Song";
+            } else {
+                audio.pause();
+                playButton.textContent = "Play Song";
+            }
+        }
+
+        // Countdown Timer Script
+        const countdownDate = new Date("February 14, 2026 00:00:00").getTime();
+        setInterval(function() {
+            const now = new Date().getTime();
+            const distance = countdownDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = hours;
+            document.getElementById('minutes').textContent = minutes;
+            document.getElementById('seconds').textContent = seconds;
+
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById('timer').textContent = "EXPIRED";
+            }
+        }, 1000);
+    </script>
+
+</body>
+</html>
